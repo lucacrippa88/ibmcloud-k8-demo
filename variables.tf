@@ -1,43 +1,44 @@
 # VPC-GEN2-CLUSTER
 
 variable "flavor" {
-  default = "bx2.2x8"
-  type = string
+  default = "bx2.4x16"
+  type    = string
 }
 
 variable "worker_count" {
   default = 1
-  type = number
+  type    = number
 }
 
 variable "resource_group" {
   default = "Default"
-  type = string
+  type    = string
 }
 
 variable "region" {
   default = "us-south"
-  type = string
+  type    = string
 }
 
 variable "service_instance_name" {
   default = "my-service-instance"
-  type = string
+  type    = string
 }
 
 variable "cluster_name" {
   default = "mytestcluster"
-  type = string
+  type    = string
 }
 
 variable "worker_pool_name" {
   default = "myvpc2pool"
-  type = string
+  type    = string
 }
 
 variable "kube_version" {
   type        = string
   description = "Kubernetes version that you want to set up in your cluster."
+  default     = "1.29"
 }
 
 
