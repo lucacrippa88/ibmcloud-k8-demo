@@ -36,17 +36,17 @@ data "ibm_resource_group" "resource_group" {
 }
 
 resource "ibm_resource_instance" "kms_instance1" {
-    name              = "test_kms"
-    service           = "kms"
-    plan              = "tiered-pricing"
-    location          = "us-south"
+  name     = "test_kms"
+  service  = "kms"
+  plan     = "tiered-pricing"
+  location = "us-south"
 }
-  
+
 resource "ibm_kms_key" "test" {
-    instance_id = "${ibm_resource_instance.kms_instance1.guid}"
-    key_name = "test_root_key"
-    standard_key =  false
-    force_delete = true
+  instance_id  = ibm_resource_instance.kms_instance1.guid
+  key_name     = "test_root_key"
+  standard_key = false
+  force_delete = true
 }
 
 resource "ibm_container_vpc_cluster" "cluster" {
@@ -63,8 +63,8 @@ resource "ibm_container_vpc_cluster" "cluster" {
   }
 
   kms_config {
-    instance_id = ibm_resource_instance.kms_instance1.guid
-    crk_id = ibm_kms_key.test.key_id
+    instance_id      = ibm_resource_instance.kms_instance1.guid
+    crk_id           = ibm_kms_key.test.key_id
     private_endpoint = false
   }
 }
@@ -111,7 +111,7 @@ resource "ibm_is_public_gateway" "pgw1" {
 
 resource "ibm_is_subnet_public_gateway_attachment" "sub-pgw1" {
   subnet         = ibm_is_subnet.subnet1.id
-  public_gateway = ibm_is_public_gateway.pgw.id
+  public_gateway = ibm_is_public_gateway.pgw1.id
 }
 
 resource "ibm_is_public_gateway" "pgw2" {
@@ -122,26 +122,22 @@ resource "ibm_is_public_gateway" "pgw2" {
 
 resource "ibm_is_subnet_public_gateway_attachment" "sub-pgw2" {
   subnet         = ibm_is_subnet.subnet2.id
-  public_gateway = ibm_is_public_gateway.pgw.id
+  public_gateway = ibm_is_public_gateway.pgw2.id
 }
 
 
 #  IBM-CONTAINER-REGISTRY
 
-provider "ibm" {
-  ibmcloud_api_key = var.ibmcloud_api_key
-}
-
 // Provision cr_namespace resource instance
 resource "ibm_cr_namespace" "cr_namespace_instance" {
-  name = var.cr_namespace_name
-  resource_group_id = data.ibm_resource_group.default_group.id
-  tags = var.cr_namespace_tags
+  name              = var.cr_namespace_name
+  resource_group_id = data.ibm_resource_group.resource_group.id
+  tags              = var.cr_namespace_tags
 }
 
 // Provision cr_retention_policy resource instance
 resource "ibm_cr_retention_policy" "cr_retention_policy_instance" {
-  namespace = var.cr_retention_policy_namespace
+  namespace       = var.cr_retention_policy_namespace
   images_per_repo = var.cr_retention_policy_images_per_repo
   retain_untagged = var.cr_retention_policy_retain_untagged
 }
