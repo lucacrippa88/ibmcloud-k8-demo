@@ -2,39 +2,37 @@
 
 variable "flavor" {
   default = "bx2.2x8"
-
+  type = string
 }
 
 variable "worker_count" {
-  default = "1"
-}
-
-variable "zone" {
-  default = "us-south-1"
+  default = 1
+  type = number
 }
 
 variable "resource_group" {
   default = "Default"
-}
-
-variable "name" {
-  default = "cluster"
+  type = string
 }
 
 variable "region" {
   default = "us-south"
+  type = string
 }
 
 variable "service_instance_name" {
   default = "my-service-instance"
+  type = string
 }
 
 variable "cluster_name" {
   default = "mytestcluster"
+  type = string
 }
 
 variable "worker_pool_name" {
   default = "myvpc2pool"
+  type = string
 }
 
 variable "kube_version" {
@@ -57,11 +55,7 @@ variable "cr_namespace_name" {
   type        = string
   default     = "name"
 }
-variable "cr_namespace_resource_group_id" {
-  description = "The ID of the resource group that the namespace will be created within."
-  type        = string
-  default     = "placeholder"
-}
+
 variable "cr_namespace_tags" {
   description = "Local tags associated with cr_namespace"
   type        = set(string)
