@@ -141,9 +141,9 @@ resource "ibm_cr_namespace" "cr_namespace_instance" {
   tags              = var.cr_namespace_tags
 }
 
-// Provision cr_retention_policy resource instance
-resource "ibm_cr_retention_policy" "cr_retention_policy_instance" {
-  namespace       = var.cr_retention_policy_namespace
-  images_per_repo = var.cr_retention_policy_images_per_repo
-  retain_untagged = var.cr_retention_policy_retain_untagged
-}
+# // Provision cr_retention_policy resource instance
+# resource "ibm_cr_retention_policy" "cr_retention_policy_instance" {
+#   namespace       = var.cr_retention_policy_namespace
+#   images_per_repo = var.cr_retention_policy_images_per_repo
+#   retain_untagged = var.cr_retention_policy_retain_untagged
+# }
