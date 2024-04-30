@@ -1,4 +1,4 @@
-// ------ IKS VPC CLUSTER ------
+# VPC-GEN2-CLUSTER
 
 resource "random_id" "name1" {
   byte_length = 2
@@ -100,7 +100,22 @@ data "ibm_container_cluster_config" "cluster_config" {
   cluster_name_id = ibm_container_vpc_cluster.cluster.id
 }
 
-// ------ CONTAINER REGISTRY ------
+
+# PUBLIC-GATEWAYS
+
+resource "ibm_is_public_gateway" "pgw" {
+  name = "pgw-${random_id.name1.hex}"
+  vpc  = ibm_is_vpc.vpc1.id
+  zone = local.ZONE1
+}
+
+resource "ibm_is_subnet_public_gateway_attachment" "sub-pgw" {
+  subnet         = ibm_is_subnet.subnet1.id
+  public_gateway = ibm_is_public_gateway.pgw.id
+}
+
+
+#  IBM-CONTAINER-REGISTRY
 
 provider "ibm" {
   ibmcloud_api_key = var.ibmcloud_api_key
