@@ -35,19 +35,19 @@ data "ibm_resource_group" "resource_group" {
   name = var.resource_group
 }
 
-resource "ibm_resource_instance" "kms_instance1" {
-  name     = "test_kms"
-  service  = "kms"
-  plan     = "tiered-pricing"
-  location = "us-south"
-}
+#resource "ibm_resource_instance" "kms_instance1" {
+#  name     = "test_kms"
+#  service  = "kms"
+#  plan     = "tiered-pricing"
+#  location = "us-south"
+#}
 
-resource "ibm_kms_key" "test" {
-  instance_id  = ibm_resource_instance.kms_instance1.guid
-  key_name     = "test_root_key"
-  standard_key = false
-  force_delete = true
-}
+#resource "ibm_kms_key" "test" {
+#  instance_id  = ibm_resource_instance.kms_instance1.guid
+#  key_name     = "test_root_key"
+#  standard_key = false
+#  force_delete = true
+#}
 
 resource "ibm_container_vpc_cluster" "cluster" {
   name              = "${var.cluster_name}${random_id.name1.hex}"
@@ -68,11 +68,11 @@ resource "ibm_container_vpc_cluster" "cluster" {
     name      = local.ZONE2
   }
 
-  kms_config {
-    instance_id      = ibm_resource_instance.kms_instance1.guid
-    crk_id           = ibm_kms_key.test.key_id
-    private_endpoint = false
-  }
+  #kms_config {
+  #  instance_id      = ibm_resource_instance.kms_instance1.guid
+ #   crk_id           = ibm_kms_key.test.key_id
+  #  private_endpoint = false
+  #}
 }
 
 # resource "ibm_container_vpc_worker_pool" "cluster_pool" {
@@ -109,27 +109,27 @@ data "ibm_container_cluster_config" "cluster_config" {
 
 # PUBLIC-GATEWAYS
 
-#resource "ibm_is_public_gateway" "pgw1" {
-#  name = "pgw-${random_id.name1.hex}"
-#  vpc  = ibm_is_vpc.vpc1.id
-#  zone = local.ZONE1
-#}
+resource "ibm_is_public_gateway" "pgw1" {
+  name = "pgw-${random_id.name1.hex}"
+  vpc  = ibm_is_vpc.vpc1.id
+  zone = local.ZONE1
+}
 
-#resource "ibm_is_subnet_public_gateway_attachment" "sub-pgw1" {
-#  subnet         = ibm_is_subnet.subnet1.id
-#  public_gateway = ibm_is_public_gateway.pgw1.id
-#}
+resource "ibm_is_subnet_public_gateway_attachment" "sub-pgw1" {
+  subnet         = ibm_is_subnet.subnet1.id
+  public_gateway = ibm_is_public_gateway.pgw1.id
+}
 
-#resource "ibm_is_public_gateway" "pgw2" {
-#  name = "pgw-${random_id.name2.hex}"
-#  vpc  = ibm_is_vpc.vpc1.id
-#  zone = local.ZONE2
-#}
+resource "ibm_is_public_gateway" "pgw2" {
+  name = "pgw-${random_id.name2.hex}"
+  vpc  = ibm_is_vpc.vpc1.id
+  zone = local.ZONE2
+}
 
-#resource "ibm_is_subnet_public_gateway_attachment" "sub-pgw2" {
-#  subnet         = ibm_is_subnet.subnet2.id
-#  public_gateway = ibm_is_public_gateway.pgw2.id
-#}
+resource "ibm_is_subnet_public_gateway_attachment" "sub-pgw2" {
+  subnet         = ibm_is_subnet.subnet2.id
+  public_gateway = ibm_is_public_gateway.pgw2.id
+}
 
 
 #  IBM-CONTAINER-REGISTRY
