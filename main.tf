@@ -109,27 +109,27 @@ data "ibm_container_cluster_config" "cluster_config" {
 
 # PUBLIC-GATEWAYS
 
-#resource "ibm_is_public_gateway" "pgw1" {
-#  name = "pgw-${random_id.name1.hex}"
-#  vpc  = ibm_is_vpc.vpc1.id
-#  zone = local.ZONE1
-#}
+resource "ibm_is_public_gateway" "pgw1" {
+  name = "pgw-${random_id.name1.hex}"
+  vpc  = ibm_is_vpc.vpc1.id
+  zone = local.ZONE1
+}
 
-#resource "ibm_is_subnet_public_gateway_attachment" "sub-pgw1" {
-#  subnet         = ibm_is_subnet.subnet1.id
-#  public_gateway = ibm_is_public_gateway.pgw1.id
-#}
+resource "ibm_is_subnet_public_gateway_attachment" "sub-pgw1" {
+  subnet         = ibm_is_subnet.subnet1.id
+  public_gateway = ibm_is_public_gateway.pgw1.id
+}
 
-#resource "ibm_is_public_gateway" "pgw2" {
-#  name = "pgw-${random_id.name2.hex}"
-#  vpc  = ibm_is_vpc.vpc1.id
-#  zone = local.ZONE2
-#}
+resource "ibm_is_public_gateway" "pgw2" {
+  name = "pgw-${random_id.name2.hex}"
+  vpc  = ibm_is_vpc.vpc1.id
+  zone = local.ZONE2
+}
 
-#resource "ibm_is_subnet_public_gateway_attachment" "sub-pgw2" {
-#  subnet         = ibm_is_subnet.subnet2.id
-#  public_gateway = ibm_is_public_gateway.pgw2.id
-#}
+resource "ibm_is_subnet_public_gateway_attachment" "sub-pgw2" {
+  subnet         = ibm_is_subnet.subnet2.id
+  public_gateway = ibm_is_public_gateway.pgw2.id
+}
 
 
 #  IBM-CONTAINER-REGISTRY
